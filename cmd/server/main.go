@@ -9,7 +9,7 @@ import (
 func main() {
 
 	//config done
-	cfg := config.Config()
+	cfg := config.LoadConfig()
 
 	fmt.Printf("config value is %v", cfg)
 

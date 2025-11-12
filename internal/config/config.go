@@ -25,11 +25,11 @@ type Config struct {
 	Database Database `yaml:"database"`
 }
 
-func (c *Config) MustLoad() *Config {
+func LoadConfig() *Config {
 
 	var cfg Config
 
-	data, err := os.ReadFile("../../config/config.yaml")
+	data, err := os.ReadFile("config/config.yaml")
 	if err != nil {
 		log.Fatalf("Error! config file not readable %v", err)
 	}
