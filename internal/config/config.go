@@ -8,7 +8,8 @@ import (
 )
 
 type Server struct {
-	Port int `yaml:"port"`
+	Port int    `yaml:"port"`
+	Addr string `yaml:addr`
 }
 
 type Database struct {

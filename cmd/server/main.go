@@ -1,19 +1,32 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
+	"github.com/labstack/echo"
 	"github.com/manish-npx/simple-go-echo/internal/config"
+	"github.com/manish-npx/simple-go-echo/internal/db"
 )
 
 func main() {
 
+	log.Println("🚀 Main Function Started ===>")
 	//config done
 	cfg := config.LoadConfig()
 
-	fmt.Printf("config value is %v", cfg)
+	//database connection
+	pool := db.ConnectDB(cfg)
 
-	//db connection
+	defer pool.Close()
 
-	//routes
+	//route
+
+	// create Echo web server
+
+	e := echo.New()
+	log.Println("🚀 Server running on Add ===>", cfg.Server.Addr)
+	//server
+	err := e.Start(cfg.Server.Addr)
+	e.Logger.Fatal(err) // start server on given port
+
 }
