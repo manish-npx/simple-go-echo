@@ -1,4 +1,4 @@
-package db
+package database
 
 import (
 	"context"
@@ -9,8 +9,7 @@ import (
 	"github.com/manish-npx/simple-go-echo/internal/config"
 )
 
-func ConnectDB(cfg *config.Config) *pgxpool.Pool {
-
+func NewPostgres(cfg *config.Config) *pgxpool.Pool {
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s",
 		cfg.Database.User,
 		cfg.Database.Password,
@@ -22,16 +21,13 @@ func ConnectDB(cfg *config.Config) *pgxpool.Pool {
 
 	pool, err := pgxpool.New(context.Background(), dsn)
 	if err != nil {
-		log.Fatalf("Error Failed to connect DB %v", err)
+		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	error := pool.Ping(context.Background())
-	if error != nil {
-		log.Fatalf("Error! Can not ping %v", error)
+	if err := pool.Ping(context.Background()); err != nil {
+		log.Fatalf("Failed to ping database: %v", err)
 	}
 
-	fmt.Println("Database Connected to PostgreSQL Successfuly")
-
+	log.Println("✅ Connected to PostgreSQL successfully")
 	return pool
-
 }
