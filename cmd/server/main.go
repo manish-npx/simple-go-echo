@@ -18,7 +18,7 @@ func main() {
 	db := database.NewPostgres(cfg)
 	defer db.Close()
 
-	// Create and start server
+	// Create and start server / routes
 	srv := server.NewServer(cfg, db)
 
 	log.Println("🚀 Server running on:", cfg.Server.Addr)

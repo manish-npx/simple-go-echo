@@ -21,6 +21,7 @@ func NewServer(cfg *config.Config, db *pgxpool.Pool) *Server {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 	e.HTTPErrorHandler = response.CustomErrorHandler
 
 	// Initialize storage and handlers
