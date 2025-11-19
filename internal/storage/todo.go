@@ -42,6 +42,9 @@ func (s *TodoStorage) GetAll(ctx context.Context) ([]models.Todo, error) {
 		}
 		todos = append(todos, todo)
 	}
+	//find all the todos rows
+	/*     todos, err := pgx.CollectRows(rows, pgx.RowToStructByName[models.Todo]) */
+
 	return todos, nil
 }
 

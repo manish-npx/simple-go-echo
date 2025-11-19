@@ -21,7 +21,20 @@ func NewServer(cfg *config.Config, db *pgxpool.Pool) *Server {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Use(middleware.CORS())
+
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173"},
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders: []string{"Content-Type", "Authorization"},
+	}))
+
+	// e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	// 	AllowOrigins: []string{"*"},
+	// 	AllowMethods: []string{"*"},
+	// 	AllowHeaders: []string{"*"},
+	// }))
+	// e.Use(middleware.CORS())
+
 	e.HTTPErrorHandler = response.CustomErrorHandler
 
 	// Initialize storage and handlers
@@ -31,9 +44,9 @@ func NewServer(cfg *config.Config, db *pgxpool.Pool) *Server {
 	// Routes
 	api := e.Group("/api")
 	api.GET("/todos", todoHandler.GetAll)
-	api.POST("/todos", todoHandler.Create)
+	api.POST("/todos/create", todoHandler.Create)
 	api.GET("/todos/:id", todoHandler.GetByID)
-	api.PUT("/todos/:id", todoHandler.Update)
+	api.PUT("/todos/update/:id", todoHandler.Update)
 	api.DELETE("/todos/:id", todoHandler.Delete)
 
 	return &Server{
