@@ -177,7 +177,7 @@
   "editor.experimental.preferTreeSitter.typescript": false,
   "editor.aiStats.enabled": false,
   "chat.agent.enabled": false,
-  "chat.disableAIFeatures": true,
+  "chat.disableAIFeatures": false,
   // 📦 Extensions
   "extensions.ignoreRecommendations": true,
   // 💡 Notebook
